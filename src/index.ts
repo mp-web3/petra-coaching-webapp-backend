@@ -9,7 +9,7 @@ const app = express();
 
 const PORT = Number(process.env.PORT ?? 3001);
 const FRONTEND_URL = process.env.FRONTEND_URL ?? 'http://localhost:5173';
-const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY ?? 'sk_test_51SAn4bDtjCvDiCKQQ0tfASgyrmjmLcHgcQiBOEwI767RHW07qTOUDUUYRXqZofGXR1kOcgqXxsDgZmBxpnJYoh6M007cfv3JtH';
+const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY ?? '';
 const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET ?? '';
 
 const stripe = new Stripe(STRIPE_SECRET_KEY);
