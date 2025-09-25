@@ -1,0 +1,56 @@
+// Prisma schema for local dev using SQLite; migrate to Postgres in production
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id               String   @id @default(cuid())
+    email            String   @unique
+    name             String?
+    stripeCustomerId String?  @map("stripe_customer_id")
+    orders           Order[]
+    createdAt        DateTime @default(now())
+    updatedAt        DateTime @updatedAt
+}
+
+model Order {
+    id                    String   @id @default(cuid())
+    user                  User?    @relation(fields: [userId], references: [id])
+    userId                String?
+    planId                String
+    amount                Int
+    currency              String
+    status                String
+    stripeSessionId       String   @unique
+    stripePaymentIntentId String?  @unique
+    consent               Consent?
+    createdAt             DateTime @default(now())
+    updatedAt             DateTime @updatedAt
+}
+
+model Consent {
+    id                 String   @id @default(cuid())
+    order              Order    @relation(fields: [orderId], references: [id])
+    orderId            String   @unique
+    tosAccepted        Boolean
+    disclosureAccepted Boolean
+    disclosureVersion  String
+    ipAddress          String?
+    userAgent          String?
+    createdAt          DateTime @default(now())
+}
+
+model PlanCatalog {
+    id            String  @id
+    title         String
+    subtitle      String
+    priceLabel    String
+    stripePriceId String
+    active        Boolean @default(true)
+}

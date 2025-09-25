@@ -1,0 +1,32 @@
+# Node & build output
+node_modules/
+dist/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Local databases / Prisma
+prisma/*.db
+prisma/*.sqlite
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Coverage / test artifacts
+coverage/
+.nyc_output/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Tooling
+.vercel/
+.netlify/
+.turbo/
