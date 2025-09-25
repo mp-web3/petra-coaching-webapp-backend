@@ -1,7 +1,11 @@
 export const planSlugToPriceId: Record<string, string> = {
-    '6w': process.env.PRICE_PREMIUM_6W || '',
-    '18w': process.env.PRICE_PREMIUM_18W || '',
-    '36w': process.env.PRICE_PREMIUM_36W || '',
-};
+    'woman-premium-6w':  process.env.PRICE_W_PREMIUM_6W  || '',
+    'woman-premium-18w': process.env.PRICE_W_PREMIUM_18W || '',
+    'woman-premium-36w': process.env.PRICE_W_PREMIUM_36W || '',
+    'woman-starter-6w':  process.env.PRICE_W_STARTER_6W || '',
+    'woman-starter-18w': process.env.PRICE_W_STARTER_18W|| '',
+    'woman-starter-36w': process.env.PRICE_W_STARTER_18W|| '',
+    // add man-*
+  };
 
 
