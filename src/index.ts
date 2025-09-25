@@ -22,6 +22,7 @@ const CreateSessionBody = z.object({
     acceptedDisclosure: z.literal(true),
     marketingOptIn: z.boolean().optional(),
     disclosureVersion: z.string().min(1),
+    email: z.email()
 });
 
 // Stripe webhook must receive the raw body BEFORE json parser
@@ -66,7 +67,7 @@ app.post('/api/checkout/sessions', async (req: Request, res: Response) => {
         return res.status(400).json({ error: 'Invalid request', details: parse.error.flatten() });
     }
 
-    const { planId, marketingOptIn, disclosureVersion } = parse.data;
+    const { planId, marketingOptIn, disclosureVersion, email } = parse.data;
     const priceId = planSlugToPriceId[planId];
     console.log('CheckoutSession request →', { planId, priceId });
     if (!priceId) {
@@ -82,6 +83,16 @@ app.post('/api/checkout/sessions', async (req: Request, res: Response) => {
                         price: priceId,
                         quantity: 1,
                     },
+                ],
+                customer_creation: 'always',
+                ...(email ? {customer_email: email} : {}),
+                custom_fields: [
+                    {
+                        key: 'full_name',
+                        label: { type:'custom', custom: 'Full name'},
+                        type: 'text',
+                        optional: false
+                    }
                 ],
                 // consent_collection: { terms_of_service: 'required' },
                 success_url: `${FRONTEND_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
