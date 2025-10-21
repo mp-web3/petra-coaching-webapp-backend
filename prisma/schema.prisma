@@ -39,8 +39,6 @@ model Consent {
     order              Order    @relation(fields: [orderId], references: [id])
     orderId            String   @unique
     tosAccepted        Boolean
-    disclosureAccepted Boolean
-    disclosureVersion  String
     ipAddress          String?
     userAgent          String?
     createdAt          DateTime @default(now())

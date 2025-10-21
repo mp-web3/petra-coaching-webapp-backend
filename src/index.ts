@@ -19,7 +19,6 @@ app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 const CreateSessionBody = z.object({
     planId: z.string().min(1),
     acceptedTos: z.literal(true),
-    acceptedDisclosure: z.literal(true),
     marketingOptIn: z.boolean().optional(),
     disclosureVersion: z.string().min(1),
     email: z.email()
@@ -84,7 +83,6 @@ app.post('/api/checkout/sessions', async (req: Request, res: Response) => {
                         quantity: 1,
                     },
                 ],
-                customer_creation: 'always',
                 ...(email ? {customer_email: email} : {}),
                 custom_fields: [
                     {
@@ -100,7 +98,6 @@ app.post('/api/checkout/sessions', async (req: Request, res: Response) => {
                 metadata: {
                     planId,
                     marketingOptIn: marketingOptIn ? 'true' : 'false',
-                    disclosureVersion,
                 },
             },
             {
